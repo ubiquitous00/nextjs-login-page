@@ -1,8 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+1) Get the local elastic search running on a docker container
+    - install it by running the script in your CMD: curl -fsSL https://elastic.co/start-local | sh
+    - Elasticsearch db will be running on http://localhost:9200/
+    - Kibana will be running on http://localhost:5601/
+    - your username and password for logging in will be provided at the end of the script
+
+    For further instructions, look here: https://www.elastic.co/docs/deploy-manage/deploy/self-managed/local-development-installation-quickstart
+
+
+2) Run the app locally
 
 ```bash
 npm run dev
@@ -15,8 +22,6 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
