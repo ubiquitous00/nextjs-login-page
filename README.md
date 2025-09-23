@@ -8,8 +8,13 @@
 
     For further instructions, look here: https://www.elastic.co/docs/deploy-manage/deploy/self-managed/local-development-installation-quickstart
 
+2) Add an auth key
+    - run "openssl rand -base64 32" to generate your own local auth secret. This key is used by the application to encrypt cookies which will secure user sessions
 
-2) Run the app locally
+    https://nextjs.org/learn/dashboard-app/adding-authentication
+
+
+3) Run the app locally
 
 ```bash
 npm run dev
