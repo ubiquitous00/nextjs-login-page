@@ -11,17 +11,17 @@ import clsx from 'clsx';
 
 const links = [
 	{ name: 'Home',
-			href: '/home',
-			icon: HomeIcon
+		href: '/home',
+		icon: HomeIcon
 	},
 	{
-			name: 'Verify',
-			href: '/home/verify',
-			icon: IdentificationIcon
+		name: 'Verify',
+		href: '/home/verify',
+		icon: IdentificationIcon
 	},
 	{ name: 'Logout',
-			href: '/logout',
-			icon: XCircleIcon
+		href: '/logout',
+		icon: XCircleIcon
 	},
 ];
 
