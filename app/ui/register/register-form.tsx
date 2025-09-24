@@ -16,50 +16,53 @@ function isValidPassword(password: string) {
   );
 }
 
-function isValidEmail(email: string) {
-  // Simple regex: must contain at least one "@" character
-  return /^[^@]+@[^@]+$/.test(email.trim());
+function isUsernameValid(username: string) {
+  return /^[a-zA-Z0-9_-]{3,20}$/.test(username);
 }
 
 export default function RegisterForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [touched, setTouched] = useState(false);
-  const [emailTouched, setEmailTouched] = useState(false);
+  const [newPasswordTouched, setNewPasswordTouched] = useState(false);
+	const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
+  const [usernameTouched, setUsernameTouched] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const passwordsMatch = password === confirmPassword;
-  const passwordValid = isValidPassword(password);
-  const emailValid = isValidEmail(email);
+  const passwordsMatch = newPassword === confirmPassword;
+  const passwordValid = isValidPassword(newPassword);
+  const usernameValid = isUsernameValid(username);
 
-  const showMatchError = touched && !passwordsMatch;
-  const showPasswordError = touched && !passwordValid;
-  const showEmailError = emailTouched && !emailValid;
+  const showMatchError = confirmPasswordTouched && !passwordsMatch;
+  const showPasswordError = newPasswordTouched && !passwordValid;
+  const showUsernameError = usernameTouched && !usernameValid;
 
-  const formValid = passwordsMatch && passwordValid && emailValid;
+  const formValid = passwordsMatch && passwordValid 
 
   return (
     <form>
       <div className="mb-4">
-        <label className="block mb-1 font-medium" htmlFor="email">
-          Email
+        <label className="block mb-1 font-medium" htmlFor="username">
+          Username
         </label>
         <input
           className="w-full px-3 py-2 border rounded"
-          type="email"
-          id="email"
-          name="email"
+          type="text"
+          id="username"
+          name="username"
           required
-          autoComplete="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          onBlur={() => setEmailTouched(true)}
+          autoComplete="username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          onBlur={() => setUsernameTouched(true)}
         />
-        {showEmailError && (
+        <p className="mt-2 text-sm text-gray-600">
+          Username must be at least 3 - 20 characters long, and can only contain alphanumeric characters, underscores, and hyphens.
+        </p>
+        {showUsernameError && (
           <p className="mt-2 text-sm text-red-600">
-            Please enter a valid email address
+            Please enter a valid username
           </p>
         )}
       </div>
@@ -75,9 +78,9 @@ export default function RegisterForm() {
             name="password"
             required
             autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onBlur={() => setTouched(true)}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            onBlur={() => setNewPasswordTouched(true)}
           />
           <button
             type="button"
@@ -115,7 +118,7 @@ export default function RegisterForm() {
             required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            onBlur={() => setTouched(true)}
+            onBlur={() => setConfirmPasswordTouched(true)}
           />
           <button
             type="button"
