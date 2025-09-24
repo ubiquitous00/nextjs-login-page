@@ -12,6 +12,7 @@
     "@apollo/server": "^5.0.0",
     "@elastic/elasticsearch": "^9.1.1",
     "@heroicons/react": "^2.2.0",
+    "bcrypt": "^6.0.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.2",
     "graphql": "^16.11.0",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^6.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
