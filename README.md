@@ -5,17 +5,18 @@
     - Elasticsearch db will be running on http://localhost:9200/
     - Kibana will be running on http://localhost:5601/
     - your username and password for logging in will be provided at the end of the script
-    - Add all of these variables into your own .env.local file (generate a new one by copying the .env.example)
+    - Add all of these variables into your own .env file (generate a new one by copying the .env.example)
 
     For further instructions, look here: https://www.elastic.co/docs/deploy-manage/deploy/self-managed/local-development-installation-quickstart
 
 2) Add an auth key
     - run "openssl rand -base64 32" to generate your own local auth secret. This key is used by the application to encrypt cookies which will secure user sessions
-    - Add the auth key generated into your .env.local file. 
+    - Add the auth key generated into your .env file. 
 
     https://nextjs.org/learn/dashboard-app/adding-authentication
 
 3) Seeding the elasticsearch database
+    - run "node elasticsearch.seed.js" once you have created an index (can just do that in kibana coz I'm lazy)
 
 
 3) Run the app locally
