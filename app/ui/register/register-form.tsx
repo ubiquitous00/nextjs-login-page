@@ -5,7 +5,8 @@ import {
   EyeSlashIcon
 } from '@heroicons/react/24/outline';
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useActionState } from "react";
+
 
 function isValidPassword(password: string) {
   // At least 12 chars, one number, one symbol
@@ -38,7 +39,12 @@ export default function RegisterForm() {
   const showPasswordError = newPasswordTouched && !passwordValid;
   const showUsernameError = usernameTouched && !usernameValid;
 
-  const formValid = passwordsMatch && passwordValid 
+  const formValid = passwordsMatch && passwordValid
+
+  const [errorMessage, formAction, isPending] = useActionState(
+    register,
+    undefined,
+  );
 
   return (
     <form>

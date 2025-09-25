@@ -1,7 +1,6 @@
 'use client';
 
 import { signIn, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -9,7 +8,14 @@ export async function authenticate(
 ) {
   try {
     const callbackUrl = formData.get("redirectTo")?.toString() || '/home';
-    await signIn("credentials", {redirect: true, callbackUrl: callbackUrl, ...Object.fromEntries(formData)});
+    const result = await signIn("credentials", {redirect: false, ...Object.fromEntries(formData)});
+
+    if (result?.status !== 200) {
+      return 'Authentication failed. Please try again.';
+    }
+    
+    window.location.href = callbackUrl;
+    return;
   } catch (error) {
     console.error("Authentication error:", error);
     return 'Authentication failed. Please try again.';
@@ -17,5 +23,5 @@ export async function authenticate(
 }
 
 export async function logout() {
-  await signOut({ redirect: true, callbackUrl: '/' });
+  await signOut({ redirect: true, callbackUrl: '/login' });
 }

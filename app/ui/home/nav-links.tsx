@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { useActionState } from "react";
-import { logout } from '@/app/lib/login';
+import { logout } from '@/app/lib/actions/login';
 
 const links = [
 	{ name: 'Home',

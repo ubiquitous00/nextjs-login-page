@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { useState, useActionState } from "react";
-import { authenticate } from "@/app/lib/login";
+import { authenticate } from "@/app/lib/actions/login";
 import { useSearchParams } from "next/navigation";
 
 export default function LoginForm() {
