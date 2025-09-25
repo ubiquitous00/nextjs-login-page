@@ -75,17 +75,17 @@ export default function RegisterForm() {
         )}
       </div>
       <div className="mb-6">
-        <label className="block mb-1 font-medium" htmlFor="password">
+        <label className="block mb-1 font-medium" htmlFor="newPassword">
           Password
         </label>
         <div className="relative">
           <input
             className="w-full px-3 py-2 border rounded pr-10"
             type={showNewPassword ? "text" : "password"}
-            id="password"
-            name="password"
+            id="newPassword"
+            name="newPassword"
             required
-            autoComplete="new-password"
+            autoComplete="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             onBlur={() => setNewPasswordTouched(true)}
@@ -114,15 +114,15 @@ export default function RegisterForm() {
         )}
       </div>
       <div className="mb-6">
-        <label className="block mb-1 font-medium" htmlFor="confirm-password">
+        <label className="block mb-1 font-medium" htmlFor="confirmPassword">
           Confirm Password
         </label>
         <div className="relative">
           <input
             className="w-full px-3 py-2 border rounded pr-10"
             type={showConfirmPassword ? "text" : "password"}
-            id="confirm-password"
-            name="confirm-password"
+            id="confirmPassword"
+            name="confirmPassword"
             required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}

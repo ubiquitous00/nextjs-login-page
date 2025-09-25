@@ -12,10 +12,10 @@ async function run() {
     process.exit(1);
   }
 
-  execSync(`curl -X POST "http://localhost:9200/users/_doc" \
+  execSync(`curl -X POST "http://localhost:9200/users/_create/testuser" \
     -H 'Content-Type: application/json' \
     -H 'Authorization: ApiKey ${apiKey}' \
-    -d '{"username":"testuser","encryptedPassword":"${hash}"}'`);
+    -d '{"encryptedPassword":"${hash}"}'`);
 
   console.log("Elasticsearch seeded with user:");
   console.log("  username: testuser");
