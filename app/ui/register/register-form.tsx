@@ -2,10 +2,12 @@
 
 import {
   EyeIcon,
-  EyeSlashIcon
+  EyeSlashIcon,
+  ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from "next/link";
 import { useState, useActionState } from "react";
+import { register } from "@/app/lib/actions/register";
 
 
 function isValidPassword(password: string) {
@@ -47,7 +49,7 @@ export default function RegisterForm() {
   );
 
   return (
-    <form>
+    <form action={formAction}>
       <div className="mb-4">
         <label className="block mb-1 font-medium" htmlFor="username">
           Username
@@ -157,14 +159,20 @@ export default function RegisterForm() {
       <button
         type="submit"
         className={`w-full py-2 font-semibold rounded transition ${
-          formValid
+          formValid && !isPending
             ? "text-white bg-blue-600 hover:bg-blue-700"
             : "text-gray-400 bg-gray-200 cursor-not-allowed"
         }`}
-        disabled={!formValid}
+        disabled={!formValid || isPending}
       >
         Sign Up
       </button>
+      {errorMessage && (
+				<>
+					<ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+					<p className="text-sm text-red-500">{errorMessage}</p>
+				</>
+			)}
     </form>
   );
 }

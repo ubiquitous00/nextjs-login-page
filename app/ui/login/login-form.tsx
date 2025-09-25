@@ -63,7 +63,7 @@ export default function LoginForm() {
 			<button
 			type="submit"
 			className={`w-full py-2 font-semibold rounded transition ${
-          formValid
+          formValid && !isPending
             ? "text-white bg-blue-600 hover:bg-blue-700"
             : "text-gray-400 bg-gray-200 cursor-not-allowed"
         }`}
