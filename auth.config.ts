@@ -17,12 +17,6 @@ export const authOptions = {
           return null;
         }
 
-        const query = {
-          query: {
-            match: { username: credentials.username }
-          }
-        };
-
         const response = await fetch(`${elasticsearchEndpoint}/users/_search`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "Authorization": `ApiKey ${elasticsearchApiKey}` },
@@ -37,7 +31,6 @@ export const authOptions = {
 
 
         if (user && bcrypt.compareSync(credentials.password, user.encryptedPassword)) {
-          console.log("Password match for user:", credentials.username);
           return user
         }
         return null;

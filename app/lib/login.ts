@@ -8,8 +8,8 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    console.log("Authenticating with formData:", Array.from(formData.entries()));
-    await signIn("credentials", {...Object.fromEntries(formData)});
+    const callbackUrl = formData.get("redirectTo")?.toString() || '/home';
+    await signIn("credentials", {redirect: true, callbackUrl: callbackUrl, ...Object.fromEntries(formData)});
   } catch (error) {
     console.error("Authentication error:", error);
     return 'Authentication failed. Please try again.';
