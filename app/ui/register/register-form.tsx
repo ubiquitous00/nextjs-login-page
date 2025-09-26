@@ -6,8 +6,9 @@ import {
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from "next/link";
-import { useState, useActionState } from "react";
+import { useState, useActionState, useEffect } from "react";
 import { register } from "@/app/lib/actions/register";
+import { useRouter } from "next/navigation";
 
 
 function isValidPassword(password: string) {
@@ -41,12 +42,22 @@ export default function RegisterForm() {
   const showPasswordError = newPasswordTouched && !passwordValid;
   const showUsernameError = usernameTouched && !usernameValid;
 
-  const formValid = passwordsMatch && passwordValid
+  const formValid = passwordsMatch && passwordValid;
 
-  const [errorMessage, formAction, isPending] = useActionState(
+  const router = useRouter();
+  const [state, formAction, isPending] = useActionState(
     register,
     undefined,
   );
+
+  useEffect(() => {
+    if (state?.success) {
+      const timer = setTimeout(() => {
+        router.push('/login');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [state, router]);
 
   return (
     <form action={formAction}>
@@ -167,11 +178,16 @@ export default function RegisterForm() {
       >
         Sign Up
       </button>
-      {errorMessage && (
+      {state?.error && (
 				<>
 					<ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-					<p className="text-sm text-red-500">{errorMessage}</p>
+					<p className="text-sm text-red-500">{state?.error}</p>
 				</>
+			)}
+      {state?.success && (
+				<>
+          <p className="text-sm text-green-500">{state.message}</p>
+        </>
 			)}
     </form>
   );
