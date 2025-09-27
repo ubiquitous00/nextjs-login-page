@@ -1,8 +1,13 @@
 "use client";
 
-import { ApolloProvider } from "@apollo/client/react";
-import { australiaPostClient } from "@/app/lib/apollo/apolloClient";
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+const australiaPostClient = new ApolloClient({
+  link: new HttpLink({ uri: '/api/verify' }),
+  cache: new InMemoryCache(),
+});
+
+export function AusPostClientProviders({ children }: { children: React.ReactNode }) {
   return <ApolloProvider client={australiaPostClient}>{children}</ApolloProvider>;
 }

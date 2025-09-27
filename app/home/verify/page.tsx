@@ -1,10 +1,10 @@
-import { Providers } from "@/app/providers";
+import { AusPostClientProviders } from "@/app/providers";
 import { Suspense } from "react";
 import VerifyForm from "@/app/ui/verify/verify-form";
 
 export default function Page() {
   return (
-    <Providers>
+    <AusPostClientProviders>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
         <div className="w-full max-w-sm p-8 bg-white rounded shadow">
           <div className="flex flex-col items-center mb-6">
@@ -15,6 +15,6 @@ export default function Page() {
           </Suspense>
         </div>
       </div>
-    </Providers>
+    </AusPostClientProviders>
   );
 }

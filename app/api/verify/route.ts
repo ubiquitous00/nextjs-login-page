@@ -14,18 +14,23 @@ const typeDefs = gql`
   }
 
   type Query {
-    searchPostcode(q: String!, state: String!): [Locality]
+    searchPostcode(postcode: String, suburb: String, state: String!): [Locality]
   }
 `;
 
 const resolvers = {
   Query: {
-    searchPostcode: async (_: any, { q, state }: { q: string; state: string }) => {
+    searchPostcode: async (_: any, { postcode, suburb, state }: { postcode: string; suburb: string; state: string }) => {
       const url = new URL(
-        "https://gavg8gilmf.execute-api.ap-southeast-2.amazonaws.com/staging/postcode/search.json"
+        `${process.env.AUS_POST_REST_ENDPOINT}`
       );
-      url.searchParams.append("q", q);
+      if (postcode) {
+        url.searchParams.append("q", postcode);
+      } else if (suburb) {
+        url.searchParams.append("q", suburb);
+      }
       if (state) url.searchParams.append("state", state);
+      console.log("Fetching from AusPost API:", url.toString());
 
       const response = await fetch(url.toString(), {
         headers: {
@@ -38,22 +43,18 @@ const resolvers = {
       }
 
       const data = await response.json();
+      console.log("Received data:", data);
+      console.log("Localities:", data.localities.locality);
       return data.localities.locality;
     },
   },
 };
 
-// ✅ Persist server instance across calls
-let server: ApolloServer | null = null;
-let handler: ReturnType<typeof startServerAndCreateNextHandler> | null = null;
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
 
-function getApolloHandler() {
-  if (!server) {
-    server = new ApolloServer({ typeDefs, resolvers });
-    handler = startServerAndCreateNextHandler(server);
-  }
-  return handler!;
-}
+const handler = startServerAndCreateNextHandler(server);
 
-export const GET = async (req: Request) => getApolloHandler()(req);
-export const POST = async (req: Request) => getApolloHandler()(req);
+export { handler as GET, handler as POST };
