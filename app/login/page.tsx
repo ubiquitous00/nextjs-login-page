@@ -1,4 +1,3 @@
-import Image from "next/image";
 import LoginForm from '@/app/ui/login/login-form';
 import { Suspense } from "react";
 
