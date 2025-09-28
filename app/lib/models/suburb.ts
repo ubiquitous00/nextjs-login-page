@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 export const suburbSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   category: z.string().nullable(),
-  location: z.string(),
-  postcode: z.number(),
-  state: z.string(),
-  latitude: z.number(),
-  longitude: z.number(),
+  location: z.string().nullable(),
+  postcode: z.string().nullable(),
+  state: z.string().nullable(),
+  latitude: z.number().nullable(),
+  longitude: z.number().nullable(),
 });
 
 export const suburbListSchema = z.array(suburbSchema);
