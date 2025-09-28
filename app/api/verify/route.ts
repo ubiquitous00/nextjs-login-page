@@ -50,8 +50,8 @@ const resolvers = {
           });
         }
 
-        const postcodeLocalities = normalizeLocality(postcodeData.localities?.locality);
-        const suburbLocalities = normalizeLocality(suburbData.localities?.locality);
+        const postcodeLocalities = normalizeLocality(postcodeData?.localities?.locality);
+        const suburbLocalities = normalizeLocality(suburbData?.localities?.locality);
         const data = [...postcodeLocalities, ...suburbLocalities];
         console.log("Route successfully completed");
         return data;
