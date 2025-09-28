@@ -52,16 +52,9 @@ export default function RegisterForm() {
 
   useEffect(() => {
     if (data) {
-      console.log("Data received:", data);
       checkVerification(data);
     }
   }, [data]);
-
-  useEffect(() => {
-    if (error) {
-      console.log("Error received:", error);
-    }
-  }, [error]);
 
   useEffect(() => {
     const saved = getFormCookie();
@@ -99,7 +92,6 @@ export default function RegisterForm() {
     }
     const localities = suburbListSchema.safeParse(data?.searchPostcode);
     if (!localities.success) {
-      console.log("Validation failed:", localities.error.message );
       setVerificationErrors("");
       setIsVerified(false);
       fillCoordinates(null, null);
@@ -144,8 +136,6 @@ export default function RegisterForm() {
   }
 
   function fillCoordinates(latitude: number | null, longitude: number | null) {
-    console.log("Filling coordinates:", { latitude, longitude });
-    console.log("isLoaded:", isLoaded);
     if (latitude && longitude) {
       setCoordinates({ lat: latitude, lng: longitude });
     } else {
@@ -155,7 +145,6 @@ export default function RegisterForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Loading status:", loading);
     setFormCookie({ postcode, suburb, state });
     setVerificationErrors(null);
     setIsVerified(false);
@@ -165,7 +154,6 @@ export default function RegisterForm() {
       return;
     }
     runSearch({ variables: { postcode: postcode, suburb: suburb, state: state } });
-    console.log("Loading completed:", loading);
   };
 
   return (
