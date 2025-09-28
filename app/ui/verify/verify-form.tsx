@@ -214,8 +214,8 @@ export default function RegisterForm() {
         {isVerified && <p className="text-green-500">The postcode, suburb, and state input are valid.</p>}
       </form>
       {/* Map display */}
-      <div className="mt-6 w-full h-96">
-        {isLoaded && coordinates ? (
+      {isLoaded && coordinates ? (
+        <div className="mt-6 w-full h-96">
           <GoogleMap
             center={coordinates}
             zoom={14}
@@ -223,10 +223,11 @@ export default function RegisterForm() {
           >
             <Marker position={coordinates} />
           </GoogleMap>
-        ) : coordinates ? (
-          <p>Loading map...</p>
-        ) : null}
-      </div>
+        </div>
+      ) : coordinates ? (
+        <p>Loading map...</p>
+      ) : null}
+      
     </>
   );
 }
