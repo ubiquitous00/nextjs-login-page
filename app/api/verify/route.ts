@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { gql } from "graphql-tag";
+import { NextRequest } from "next/server";
 
 const MAX_RETRIES = 3;
 const INITIAL_DELAY_MS = 500;
@@ -102,4 +103,10 @@ const server = new ApolloServer({
 
 const handler = startServerAndCreateNextHandler(server);
 
-export { handler as GET, handler as POST };
+export async function GET(request: NextRequest) {
+  return handler(request);
+}
+
+export async function POST(request: NextRequest) {
+  return handler(request);
+}
