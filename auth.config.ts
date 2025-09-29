@@ -26,7 +26,7 @@ export const authOptions = {
         const result = await response.json();
 
         if (result.found == true && bcrypt.compareSync(credentials.password, result._source?.encryptedPassword)) {
-          return { id: credentials.username };
+          return { name: credentials.username, id: credentials.username };
         }
         return null;
       }
