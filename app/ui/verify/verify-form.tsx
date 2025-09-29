@@ -80,33 +80,28 @@ export default function RegisterForm() {
       return;
     }
 
+    if (!data?.searchPostcode?.length) {
+      setVerificationErrors(`The suburb ${suburb} does not exist in the state ${state}.`);
+      setIsVerified(false);
+      fillCoordinates(null, null);
+      return;
+    }
+
     const matchedPostCodeToSuburb = localities.data.find(
       (s) =>
         s.postcode === postcode &&
         s.location?.toLowerCase() === suburb.toLowerCase()
     );
     if (!matchedPostCodeToSuburb) {
-      verificationErrorsString += `The postcode ${postcode} does not match the suburb ${suburb}.\n\n`;
+      setVerificationErrors(`The postcode ${postcode} does not match the suburb ${suburb}.`);
       setIsVerified(false);
       fillCoordinates(null, null);
+      return;
     }
 
-    if (!data?.searchPostcode?.length) {
-      verificationErrorsString += `The suburb ${suburb} does not exist in the state ${state}.\n`;
-      setIsVerified(false);
-      fillCoordinates(null, null);
-    }
+    fillCoordinates(matchedPostCodeToSuburb.latitude, matchedPostCodeToSuburb.longitude);
+    setIsVerified(true);
 
-    if (matchedPostCodeToSuburb && data?.searchPostcode?.length) {
-      fillCoordinates(matchedPostCodeToSuburb.latitude, matchedPostCodeToSuburb.longitude);
-      setIsVerified(true);
-    }
-
-    if (isVerified) {
-      setVerificationErrors(null);
-    } else {
-      setVerificationErrors(verificationErrorsString.trim());
-    }
     return;
   }
 
