@@ -52,8 +52,8 @@ export default function RegisterForm() {
 
   useEffect(() => {
     if (data) {
-      checkVerification(data);
-      logVerificationAttempt({postcode, suburb, state}, isVerified, verificationErrors);
+      const result = checkVerification(data);
+      logVerificationAttempt({ postcode, suburb, state }, result.isVerified, result.error);
     }
   }, [data]);
 
@@ -76,14 +76,14 @@ export default function RegisterForm() {
       setVerificationErrors("There was an error while trying to verify the address. Please try again.");
       setIsVerified(false);
       fillCoordinates(null, null);
-      return;
+      return { isVerified: false, error: "There was an error while trying to verify the address. Please try again."};
     }
 
     if (!data?.searchPostcode?.length) {
       setVerificationErrors(`The suburb ${suburb} does not exist in the state ${state}.`);
       setIsVerified(false);
       fillCoordinates(null, null);
-      return;
+      return { isVerified: false, error: `The suburb ${suburb} does not exist in the state ${state}.`};
     }
 
     const matchedPostCodeToSuburb = localities.data.find(
@@ -95,13 +95,13 @@ export default function RegisterForm() {
       setVerificationErrors(`The postcode ${postcode} does not match the suburb ${suburb}.`);
       setIsVerified(false);
       fillCoordinates(null, null);
-      return;
+      return { isVerified: false, error: `The postcode ${postcode} does not match the suburb ${suburb}.`};
     }
 
     fillCoordinates(matchedPostCodeToSuburb.latitude, matchedPostCodeToSuburb.longitude);
     setIsVerified(true);
 
-    return;
+    return { isVerified: true, error: null};
   }
 
   function fillCoordinates(latitude: number | null, longitude: number | null) {
