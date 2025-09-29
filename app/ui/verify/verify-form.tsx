@@ -70,7 +70,6 @@ export default function RegisterForm() {
   const [verificationErrors, setVerificationErrors] = useState<any>(null);
 
   function checkVerification(data: any) {
-    let verificationErrorsString = "";
     const localities = suburbListSchema.safeParse(data?.searchPostcode);
     console.log("Localities:", localities);
     if (!localities.success) {
