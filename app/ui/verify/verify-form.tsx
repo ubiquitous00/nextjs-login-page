@@ -6,7 +6,7 @@ import { gql } from "@apollo/client";
 import { useLazyQuery } from "@apollo/client/react";
 import { australiaPostClient as client } from "@/app/lib/apollo/apolloClient";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { set } from "zod";
+import { logVerificationAttempt } from "@/app/lib/actions/verify";
 
 export default function RegisterForm() {
   const [postcode, setPostcode] = useState("");
@@ -53,6 +53,7 @@ export default function RegisterForm() {
   useEffect(() => {
     if (data) {
       checkVerification(data);
+      logVerificationAttempt({postcode, suburb, state}, isVerified, verificationErrors);
     }
   }, [data]);
 
@@ -71,7 +72,6 @@ export default function RegisterForm() {
 
   function checkVerification(data: any) {
     const localities = suburbListSchema.safeParse(data?.searchPostcode);
-    console.log("Localities:", localities);
     if (!localities.success) {
       setVerificationErrors("There was an error while trying to verify the address. Please try again.");
       setIsVerified(false);
