@@ -50,6 +50,7 @@ next-env.d.ts
 # Playwright
 node_modules/
 /test-results/
+/tests-examples/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
