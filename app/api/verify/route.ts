@@ -53,7 +53,7 @@ const resolvers = {
         const postcodeLocalities = normalizeLocality(postcodeData?.localities?.locality);
         const suburbLocalities = normalizeLocality(suburbData?.localities?.locality);
         const data = [...postcodeLocalities, ...suburbLocalities];
-        console.log("Route successfully completed");
+        console.log("Localities requests successfully completed");
         return data;
       } catch (error) {
         console.log("Error in searchPostcode resolver:", error);
@@ -84,7 +84,6 @@ async function fetchWithRetry(url: string, headers: any) {
         return JSON.parse(text);
       }
 
-      // If body is empty, throw to retry
       throw new Error("Empty response body");
     } catch (err) {
       if (attempt === MAX_RETRIES) throw err;

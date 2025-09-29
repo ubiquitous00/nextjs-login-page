@@ -1,7 +1,6 @@
 'use server';
 
 import { registerNewUser } from "@/app/lib/repositories/elasticsearch/elasticsearch";
-import { redirect } from "next/navigation";
 
 
 export async function register(

@@ -14,7 +14,6 @@ export default function RegisterForm() {
   const [state, setState] = useState("");
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
 
-  // 👉 Helpers to manage cookies
   function setFormCookie(data: any) {
     document.cookie = `formSession=${encodeURIComponent(
       JSON.stringify(data)
@@ -45,7 +44,6 @@ export default function RegisterForm() {
     fetchPolicy: "no-cache"
   });
 
-  // Google Maps loader
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
   });
@@ -185,7 +183,6 @@ export default function RegisterForm() {
         {verificationErrors && <p className="text-red-500 whitespace-pre-line">{verificationErrors}</p>}
         {isVerified && <p className="text-green-500">The postcode, suburb, and state input are valid.</p>}
       </form>
-      {/* Map display */}
       {isLoaded && coordinates ? (
         <div className="mt-6 w-full h-96">
           <GoogleMap
