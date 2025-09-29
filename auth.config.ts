@@ -37,10 +37,10 @@ export const authOptions = {
     newUser: '/register'
   },
   session: {
-    maxAge: 10,
+    maxAge: 10 * 60,
   },
   jwt: {
-    maxAge: 10,
+    maxAge: 10 * 60,
   }
 }
 

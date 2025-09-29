@@ -9,8 +9,10 @@ export default function SessionWatcher() {
   useEffect(() => {
     if (status === "unauthenticated") {
       setShowPopup(true);
+    } else if (status === "authenticated") {
+      setShowPopup(false);
     }
-  }, [status]);
+  }, [status, session]);
 
   return (
     <>

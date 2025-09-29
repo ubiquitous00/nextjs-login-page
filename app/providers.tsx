@@ -15,5 +15,5 @@ export function AusPostClientProviders({ children }: { children: React.ReactNode
 }
 
 export function GlobalLayoutProviders({ children }: { children: ReactNode }) {
-  return <SessionProvider>{children}</SessionProvider>;
+  return <SessionProvider refetchInterval={60}>{children}</SessionProvider>;
 }
