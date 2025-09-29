@@ -16,10 +16,10 @@
     https://nextjs.org/learn/dashboard-app/adding-authentication
 
 3) Seeding the elasticsearch database
-    - run "node elasticsearch.seed.js" once you have created an index (can just do that in kibana coz I'm lazy)
+    - run "node elasticsearch.seed.js", which will fill in your local running elasticsearch db with a new index [firstname-lastname-index], and load it with a single user
 
 
-3) Run the app locally
+4) Run the app locally
 
 ```bash
 npm run dev
@@ -31,12 +31,19 @@ pnpm dev
 bun dev
 ```
 
+5) Playwright has been installed on this app. To run these tests:
+    - run "pnpm exec playwright test"
+    - If you want to see it executed in the ui, then use "pnpm exec playwright test --headed"
+    
+
 ## Codebase Structure
 
 /app: src code
 /app/api: Where all the API or external calls should go
-/app/lib: where all library code should go. Stores the models and actions, but not repository code
-/app/ui
-/app/*: everything else is probably a page
+/app/lib: where all library code should go. Stores the models and actions for any intermediate transactions between the client and the server calls
+/app/ui: All forms or reusable react templates should be going here
+/app/*: everything else is a page
 
 /public: where static assets are stored to be served
+
+/tests: All test files are stored here. One E2E testing file + individual unit tests, so that it's easier to manage and check which pages have been covered.

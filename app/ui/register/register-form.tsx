@@ -179,15 +179,15 @@ export default function RegisterForm() {
         Sign Up
       </button>
       {state?.error && (
-				<>
+				<div className="flex items-center space-x-2">
 					<ExclamationCircleIcon className="h-5 w-5 text-red-500" />
 					<p className="text-sm text-red-500">{state?.error}</p>
-				</>
+				</div>
 			)}
       {state?.success && (
-				<>
+				<div className="flex items-center space-x-2">
           <p className="text-sm text-green-500">{state.message}</p>
-        </>
+        </div>
 			)}
     </form>
   );

@@ -72,10 +72,10 @@ export default function LoginForm() {
 			Login
 			</button>
 			{errorMessage && (
-				<>
+				<div className="flex items-center space-x-2">
 					<ExclamationCircleIcon className="h-5 w-5 text-red-500" />
 					<p className="text-sm text-red-500">{errorMessage}</p>
-				</>
+				</div>
 			)}
 		</form>
 	);
