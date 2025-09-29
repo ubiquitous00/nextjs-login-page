@@ -1,9 +1,11 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  workflow_dispatch:
+# Only uncomment these once it actually makes sense to - the app automatically gets deployed to prod anyway via vercel
+#  push:
+#    branches: [ main, master ]
+#  pull_request:
+#    branches: [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
