@@ -1,6 +1,11 @@
 import LoginForm from '@/app/ui/login/login-form';
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Login",
+  description: "Login for existing users"
+}
+
 export default function Page() {
   return (
     <>

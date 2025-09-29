@@ -70,68 +70,43 @@ export default function RegisterForm() {
   const [verificationErrors, setVerificationErrors] = useState<any>(null);
 
   function checkVerification(data: any) {
-    if (!data?.searchPostcode?.length) {
-      if (postcode && state) {
-        setIsVerified(false);
-        setVerificationErrors(`The postcode ${postcode} does not exist in the state ${state}.`);
-      }
-      else if (suburb && state) {
-        setIsVerified(false);
-        setVerificationErrors(`The suburb ${suburb} does not exist in the state ${state}.`);
-      }
-      else if (postcode) {
-        setIsVerified(false);
-        setVerificationErrors(`The postcode ${postcode} does not exist.`);
-      }
-      else if (suburb) {
-        setIsVerified(false);
-        setVerificationErrors(`The suburb ${suburb} does not exist.`);
-      }
-      fillCoordinates(null, null);
-      return;
-    }
+    let verificationErrorsString = "";
     const localities = suburbListSchema.safeParse(data?.searchPostcode);
+    console.log("Localities:", localities);
     if (!localities.success) {
-      setVerificationErrors("");
+      setVerificationErrors("There was an error while trying to verify the address. Please try again.");
       setIsVerified(false);
       fillCoordinates(null, null);
       return;
     }
 
-    if (suburb && postcode) {
-      const matchedPostCodeToSuburb = localities.data.find(
-        (s) =>
-          s.postcode === postcode &&
-          s.location?.toLowerCase() === suburb.toLowerCase()
-      );
-      if (!matchedPostCodeToSuburb) {
-        setIsVerified(false);
-        setVerificationErrors(`The postcode ${postcode} does not match the suburb ${suburb}.`);
-        fillCoordinates(null, null);
-        return;
-      } else {
-        fillCoordinates(matchedPostCodeToSuburb.latitude, matchedPostCodeToSuburb.longitude);
-      }
-    } else if (postcode) {
-      const matchedPostCode = localities.data.find((s) => s.postcode === postcode);
-      if (matchedPostCode) {
-        fillCoordinates(matchedPostCode.latitude, matchedPostCode.longitude);
-      } else {
-        fillCoordinates(null, null);
-      }
-    } else if (suburb) {
-      const matchedSuburb = localities.data.find(
-        (s) => s.location?.toLowerCase() === suburb.toLowerCase()
-      );
-      if (matchedSuburb) {
-        fillCoordinates(matchedSuburb.latitude, matchedSuburb.longitude);
-      } else {
-        fillCoordinates(null, null);
-      }
+    const matchedPostCodeToSuburb = localities.data.find(
+      (s) =>
+        s.postcode === postcode &&
+        s.location?.toLowerCase() === suburb.toLowerCase()
+    );
+    if (!matchedPostCodeToSuburb) {
+      verificationErrorsString += `The postcode ${postcode} does not match the suburb ${suburb}.\n\n`;
+      setIsVerified(false);
+      fillCoordinates(null, null);
     }
 
-    setIsVerified(true);
-    setVerificationErrors(null);
+    if (!data?.searchPostcode?.length) {
+      verificationErrorsString += `The suburb ${suburb} does not exist in the state ${state}.\n`;
+      setIsVerified(false);
+      fillCoordinates(null, null);
+    }
+
+    if (matchedPostCodeToSuburb && data?.searchPostcode?.length) {
+      fillCoordinates(matchedPostCodeToSuburb.latitude, matchedPostCodeToSuburb.longitude);
+      setIsVerified(true);
+    }
+
+    if (isVerified) {
+      setVerificationErrors(null);
+    } else {
+      setVerificationErrors(verificationErrorsString.trim());
+    }
     return;
   }
 
@@ -148,8 +123,8 @@ export default function RegisterForm() {
     setFormCookie({ postcode, suburb, state });
     setVerificationErrors(null);
     setIsVerified(false);
-    if (!postcode && !suburb) {
-      setVerificationErrors("Please enter either a postcode or a suburb.");
+    if (!postcode || !suburb || !state) {
+      setVerificationErrors("Please fill in all fields.");
       setIsVerified(false);
       return;
     }
@@ -167,6 +142,7 @@ export default function RegisterForm() {
             type="text"
             id="postcode"
             name="postcode"
+            required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             value={postcode}
             onChange={(e) => setPostcode(e.target.value)}
@@ -180,6 +156,7 @@ export default function RegisterForm() {
             type="text"
             id="suburb"
             name="suburb"
+            required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             value={suburb}
             onChange={(e) => setSuburb(e.target.value)}
@@ -193,6 +170,7 @@ export default function RegisterForm() {
             type="text"
             id="state"
             name="state"
+            required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-blue-500 
             focus:border-blue-500 sm:text-sm"
             value={state}
@@ -210,7 +188,7 @@ export default function RegisterForm() {
         </button>
         {loading && <p>Loading...</p>}
         {error && <p className="text-red-500">There was an error while trying to verify: {error.message}</p>}
-        {verificationErrors && <p className="text-red-500">{verificationErrors}</p>}
+        {verificationErrors && <p className="text-red-500 whitespace-pre-line">{verificationErrors}</p>}
         {isVerified && <p className="text-green-500">The postcode, suburb, and state input are valid.</p>}
       </form>
       {/* Map display */}

@@ -34,7 +34,14 @@ export const authOptions = {
   ],
   pages: {
     signIn: '/login',
+    newUser: '/register'
   },
+  session: {
+    maxAge: 10,
+  },
+  jwt: {
+    maxAge: 10,
+  }
 }
 
 export const authConfig = NextAuth(authOptions)

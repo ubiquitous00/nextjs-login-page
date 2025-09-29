@@ -1,4 +1,5 @@
 import NavLinks from '@/app/ui/home/nav-links';
+import SessionWatcher from '@/app/ui/session-watcher/session-watcher';
 
 export default function VerifyLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +15,10 @@ export default function VerifyLayout({ children }: { children: React.ReactNode }
       >
         <NavLinks />
       </nav>
-      <main>{children}</main>
+      <main>
+        {children}
+        <SessionWatcher/>
+      </main>
     </div>
   );
 }

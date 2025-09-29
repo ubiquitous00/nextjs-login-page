@@ -2,6 +2,11 @@ import { AusPostClientProviders } from "@/app/providers";
 import { Suspense } from "react";
 import VerifyForm from "@/app/ui/verify/verify-form";
 
+export const metadata = {
+  title: "Verify your address",
+  description: "Verify your postcode, suburb and state"
+}
+
 export default function Page() {
   return (
     <AusPostClientProviders>

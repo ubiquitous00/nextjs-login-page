@@ -2,6 +2,11 @@ import Image from "next/image";
 import RegisterForm from '@/app/ui/register/register-form';
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Register",
+  description: "Registration for new users"
+}
+
 export default function Page() {
   return (
     <>
