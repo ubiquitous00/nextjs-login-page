@@ -30,6 +30,15 @@ async function run() {
       { stdio: "inherit" }
     );
 
+    console.log(`Ensuring index "${userIndex}-verification-attempts" exists...`);
+    execSync(
+      `curl -X PUT "${ELASTICSEARCH_ENDPOINT}/${userIndex}-verification-attempts" \
+        -H 'Content-Type: application/json' \
+        -H 'Authorization: ApiKey ${apiKey}' \
+        -d '{}'`,
+      { stdio: "inherit" }
+    );
+
     // Insert the test user document
     console.log(`Creating user "${userId}"...`);
     execSync(
